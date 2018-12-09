@@ -1,4 +1,4 @@
-function y=neutron(h,la,q,N,plt)
+function y=neutron(h,la,q,plt)
     %Standarm‰ﬂig kein plot
     if nargin < 5
         plt = 0;

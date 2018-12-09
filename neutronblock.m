@@ -5,7 +5,11 @@
 % n - Anzahl Versuche
 % k - Wie viele Schritte auf einmal gemacht werden
 % plt - Wird ein Plot angeziegt?
+%     0 - nein
+%     1 - 2D Plot
+%     2 - 3D Plot
 %----------
+% Output:
 % y = [(-),(0),(+)]^T - Anzahl der F‰lle
 %----------
 function y = neutronblock(h,la,q,n,k,plt)
@@ -15,7 +19,7 @@ function y = neutronblock(h,la,q,n,k,plt)
     end
     %Standarm‰ﬂig 50 Wiederholungen
     if nargin < 5
-        k = 50;
+        k = 5;
     end
     
     %Anzahl von +,0,-
@@ -24,6 +28,15 @@ function y = neutronblock(h,la,q,n,k,plt)
     %Initialisieren
     start = 1;
     s = zeros(3,n);
+    
+    if plt
+        colors = repmat(get(gca,'colororder'),[ceil(n/7),1]);
+        colors = colors(1:n,:)
+        title("Neutronenbeschuss")
+        xlabel("x")
+        ylabel("y")
+        hold on
+    end
     
     while(n > 0)
     
@@ -63,6 +76,30 @@ function y = neutronblock(h,la,q,n,k,plt)
         l(mask) = k+1;         %sind wichtiger als andere
         r(mask) = k+1;
         
+        %Plotten
+        if plt > 0
+            %Nan falls schon fertig
+            Y = repmat(reshape(1:k+1,[1,1,k+1]),[3,n,1]);
+            T = repmat(t,[3,1,k+1]);
+            z(Y>T) = nan;
+            %ploten
+            if plt == 1
+                for i = 1:n
+                    plot(reshape(z(1,i,:),[k+1,1,1]), reshape(z(2,i,:),[k+1,1,1]),'Color',colors(i,:))
+                end
+            end
+            if plt == 2
+                for i = 1:n
+                    plot3(reshape(z(1,i,:),[k+1,1,1]), reshape(z(2,i,:),[k+1,1,1]), reshape(z(3,i,:),[k+1,1,1]), 'Color',colors(i,:))
+                end
+            end
+            colors = colors(repmat((t == k+1)',[1,3]));
+            colors = reshape(colors,length(colors)/3,3);
+            %plot([1,n+1],[-a,-a]);
+            %plot([1,n+1],[b,b]);
+            %axis([1,max(t)*(21/20),-a-(a+b)/20,b+(a+b)/20]);
+        end
+        
         %Anzahlen
         y(1) = y(1) + sum(l(l == t) ~= k+1);
         y(2) = y(2) + sum(a(mask) ~= k+1);
@@ -72,7 +109,7 @@ function y = neutronblock(h,la,q,n,k,plt)
         s = z(:,:,end);
         s = s(repmat(t == k+1,[3,1]));
         s = reshape(s,3,length(s)/3);
-        n = size(s,2);
+        n = size(s,2)
         
         start = 0;
     end

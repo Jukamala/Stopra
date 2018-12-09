@@ -10,9 +10,15 @@
 %     2 - 3D Plot
 %----------
 % Output:
-% y = [(-),(0),(+)]^T - Anzahl der F‰lle
+% y = [p(-),p(0),p(+)]^T - Wahrscheinlickeit der F‰lle
 %----------
-function y = neutronblock(h,la,q,n,k,plt)
+% Neutron simuliert den Neutronenbeschuss auf eine Wand mit den Paramtern
+% h, la und q. Dieser Experiment wird n mal wiederholt.
+% Intern berechnet das Programm dazu die n‰chsten Schritte und rechet aus
+% ob inzwischen ein terminierendes Eriegnis eingetreten ist, dann
+% wiederholt es mit allen nichtterminierten Versuchen solange weiter bis
+% alle abgeschlossen sind.
+function y = neutron(h,la,q,n,k,plt)
     %Standarm‰ﬂig kein Anfang
     if nargin < 6
         plt = 0;
@@ -26,12 +32,14 @@ function y = neutronblock(h,la,q,n,k,plt)
     y = zeros(3,1);
     
     %Initialisieren
+    n0 = n;
     start = 1;
     s = zeros(3,n);
     
-    if plt
+    if plt > 0
+        %Farben initialisieren
         colors = repmat(get(gca,'colororder'),[ceil(n/7),1]);
-        colors = colors(1:n,:)
+        colors = colors(1:n,:);
         title("Neutronenbeschuss")
         xlabel("x")
         ylabel("y")
@@ -82,22 +90,21 @@ function y = neutronblock(h,la,q,n,k,plt)
             Y = repmat(reshape(1:k+1,[1,1,k+1]),[3,n,1]);
             T = repmat(t,[3,1,k+1]);
             z(Y>T) = nan;
-            %ploten
+            %2D Plot
             if plt == 1
                 for i = 1:n
                     plot(reshape(z(1,i,:),[k+1,1,1]), reshape(z(2,i,:),[k+1,1,1]),'Color',colors(i,:))
                 end
             end
+            %3D Plot
             if plt == 2
                 for i = 1:n
                     plot3(reshape(z(1,i,:),[k+1,1,1]), reshape(z(2,i,:),[k+1,1,1]), reshape(z(3,i,:),[k+1,1,1]), 'Color',colors(i,:))
                 end
             end
+            %Farben updaten (damit sie im Plot sp‰ter gleich bleiben)
             colors = colors(repmat((t == k+1)',[1,3]));
             colors = reshape(colors,length(colors)/3,3);
-            %plot([1,n+1],[-a,-a]);
-            %plot([1,n+1],[b,b]);
-            %axis([1,max(t)*(21/20),-a-(a+b)/20,b+(a+b)/20]);
         end
         
         %Anzahlen
@@ -113,4 +120,5 @@ function y = neutronblock(h,la,q,n,k,plt)
         
         start = 0;
     end
+    y = y./n0;
 end

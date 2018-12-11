@@ -21,8 +21,8 @@ function main()
     abs(y(3) - 0.01)
     
     %Plot der Eintrittstiefe für h = 10 cm
-    % siehe auch bleiwand_eintritt.fig
+    siehe auch bleiwand_eintritt.fig
     figure(3)
-    yvert(10,la,q,10000)
+    %yvert(10,la,q,10000)
     
 end

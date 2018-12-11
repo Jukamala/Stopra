@@ -27,6 +27,11 @@ function y = neutron(h,la,q,n,k,plt)
     if nargin < 5
         k = 5;
     end
+    %optimiert
+    if(k == 1)
+        y = simpleneutron(h,la,q,n,plt)
+        return
+    end
     
     %Anzahl von +,0,-
     y = zeros(3,1);

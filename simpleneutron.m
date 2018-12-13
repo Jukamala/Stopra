@@ -45,16 +45,10 @@ function y = simpleneutron(h,la,q,n,plt)
                     plot([s(1,i),z(1,i)], [s(1,2),z(1,2)],'Color',colors(i,:))
                 end
             end
-            %3D Plot
-            if plt == 2
-                for i = 1:n
-                    plot3([s(1,i),z(1,i)], [s(2,i),z(2,i)], [s(3,i),z(3,i)], 'Color',colors(i,:))
-                end
-            end
         end
         
         %Absorbieren
-        a = rand(1,n) <= q;
+        a = (rand(1,n) <= q);
         y(2) = y(2) + sum(a);
         
         %Mit dem Rest weiter machen
@@ -67,7 +61,7 @@ function y = simpleneutron(h,la,q,n,plt)
         y(3) = y(3) + sum(r);
         
         %neuer Startvektor wo Simulation noch nicht fertig ist
-        t = l == 0 & r == 0;
+        t = (l == 0 & r == 0);
         s = z(repmat(t,[3,1]));
         s = reshape(s,3,length(s)/3);
         n = size(s,2)

@@ -36,7 +36,7 @@ function main_versicherung()
     varc = linspace(6500,7500,21);
     i = 0;
     y = 1;
-    while(y > 0.0005 && i <= 21)
+    while(y > 0.005 && i < 21)
         i = i + 1;
         y = ruin(T,k,x0,la,c,varc(i),100000);
     end

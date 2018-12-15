@@ -5,22 +5,22 @@
 % N - Anzahl der Experimente pro Datenpunkt
 %----------
 % Berechnet für 100 äquidistante Punkte die Wahrscheinlichkeiten aller
-% Ereignisse und plottet diese dann, die Genauigkeit hängt von der Anzahl
+% Ereignisse und plottet diese dann - die Genauigkeit hängt von der Anzahl
 % der Versuche pro Punkt ab
 function dicke(la,q,N)
     y = zeros(3,1);
-    %Alle Versuche
     h = linspace(0.01,50,100);
     for i = 1:100
+        %Simulieren der Wahrscheinlichkeit
         y(:,i) = neutron(h(i),la,q,N);
     end
     %Plot
     title("Ereignisse")
     xlabel("h in cm")
-    ylabel("p in %")
-    l1 = "linker Austritt";
+    ylabel("p")
+    l1 = "Reflexion";
     l2 = "Absorption";
-    l3 = "rechter Austritt";
+    l3 = "Transmission";
     hold on
     a1 = plot(h,y(1,:));
     a2 = plot(h,y(2,:));

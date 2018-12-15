@@ -19,7 +19,7 @@ function yvert(h0,la,q,N)
     %Plot
     title("Wahrscheinlickeit eines Eintritts bis maximal x cm bei einer Wand der Breite " + h0)
     xlabel("x in cm")
-    ylabel("p in %")
+    ylabel("p")
     hold on
     plot(h,y);
 end

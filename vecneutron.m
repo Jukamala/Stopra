@@ -29,7 +29,7 @@ function y = vecneutron(h,la,q,n,k,plt)
     end
     %optimiert
     if(k == 1)
-        y = simpleneutron(h,la,q,n,plt)
+        y = neutron(h,la,q,n,plt);
         return
     end
     
@@ -106,6 +106,7 @@ function y = vecneutron(h,la,q,n,k,plt)
                 for i = 1:n
                     plot3(reshape(z(1,i,:),[k+1,1,1]), reshape(z(2,i,:),[k+1,1,1]), reshape(z(3,i,:),[k+1,1,1]), 'Color',colors(i,:))
                 end
+                pause(0.1)
             end
             %Farben updaten (damit sie im Plot später gleich bleiben)
             colors = colors(repmat((t == k+1)',[1,3]));

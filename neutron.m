@@ -66,6 +66,7 @@ function y = neutron(h,la,q,N,plt)
             for i = 1:N
                 plot([s(1,i),z(1,i)], [s(2,i),z(2,i)],'Color',colors(i,:))
             end
+            pause(0.1)
         end
         
         %Absorbieren

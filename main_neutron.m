@@ -11,7 +11,7 @@ function main_neutron()
     neutron(25,la,q,5,1)
     pause(0.01)
     
-    %Plot der Wahrscheinlichkeiten für variable Höhe
+    %Plot der Wahrscheinlichkeiten für variable Dicke
     % siehe auch bleiwand_dicke.fig
     figure(2)
     dicke(la,q,50000)
